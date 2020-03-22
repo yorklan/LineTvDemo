@@ -19,5 +19,5 @@ public interface DramasDao {
     List<Drama> getDramas();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertDrama(Drama drama);
+    void insertAllDramas(List<Drama> dramas);
 }
