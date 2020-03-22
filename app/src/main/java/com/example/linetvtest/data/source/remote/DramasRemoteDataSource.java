@@ -63,4 +63,10 @@ public class DramasRemoteDataSource implements DramasDataSource {
     @Override
     public void saveDramas(List<Drama> dramas) {
     }
+
+    // not use
+    @Override
+    public void getSearchDramas(String keyword, @NonNull LoadDramasCallback callback) {
+
+    }
 }

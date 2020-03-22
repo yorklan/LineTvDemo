@@ -90,7 +90,7 @@ public class GsonRequest<T> extends Request<T> {
         try {
             String json = new String(
                     response.data,
-                    HttpHeaderParser.parseCharset(response.headers));
+                    StandardCharsets.UTF_8);
             Log.e("volley_string", json);
             return Response.success(
                     gson.fromJson(json, clazz),

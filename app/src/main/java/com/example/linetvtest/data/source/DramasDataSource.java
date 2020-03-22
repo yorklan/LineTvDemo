@@ -1,6 +1,7 @@
 package com.example.linetvtest.data.source;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.linetvtest.data.Drama;
 
@@ -18,4 +19,6 @@ public interface DramasDataSource {
     void getDramas(@NonNull LoadDramasCallback callback);
 
     void saveDramas(List<Drama> dramas);
+
+    void getSearchDramas(String keyword, @NonNull LoadDramasCallback callback);
 }

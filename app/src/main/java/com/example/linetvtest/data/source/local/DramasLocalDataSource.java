@@ -67,4 +67,26 @@ public class DramasLocalDataSource implements DramasDataSource {
 
         mGlobalExecutors.diskIO().execute(saveRunnable);
     }
+
+    @Override
+    public void getSearchDramas(final String keyword, @NonNull final LoadDramasCallback callback) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                final List<Drama> dramas = mDramasDao.getSearchDramas(keyword);
+                mGlobalExecutors.mainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (dramas!=null && !dramas.isEmpty()) {
+                            callback.onDramasLoaded(dramas);
+                        } else {
+                            callback.onDataNotAvailable();
+                        }
+                    }
+                });
+            }
+        };
+
+        mGlobalExecutors.diskIO().execute(runnable);
+    }
 }

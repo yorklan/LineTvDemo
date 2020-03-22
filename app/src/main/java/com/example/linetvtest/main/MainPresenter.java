@@ -37,4 +37,21 @@ public class MainPresenter implements MainContract.Presenter{
             }
         });
     }
+
+    @Override
+    public void getSearchData(String keyword) {
+        mDramasRepository.getSearchDramas(keyword, new DramasDataSource.LoadDramasCallback() {
+            @Override
+            public void onDramasLoaded(List<Drama> dramas) {
+                for (Drama d : dramas){
+                    Log.e("drama*"+d.getId(),d.getTotalViews()+",");
+                }
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                Log.e("drama*","error");
+            }
+        });
+    }
 }

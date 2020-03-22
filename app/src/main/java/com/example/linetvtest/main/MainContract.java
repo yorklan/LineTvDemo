@@ -9,5 +9,7 @@ public interface MainContract {
     interface Presenter {
 
         void getTestData();
+
+        void getSearchData(String keyword);
     }
 }

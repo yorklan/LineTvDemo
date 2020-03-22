@@ -63,4 +63,9 @@ public class DramasRepository implements DramasDataSource {
     public void saveDramas(List<Drama> dramas) {
         mDramasLocalDataSource.saveDramas(dramas);
     }
+
+    @Override
+    public void getSearchDramas(String keyword, @NonNull LoadDramasCallback callback) {
+        mDramasLocalDataSource.getSearchDramas("%"+keyword+"%", callback);
+    }
 }

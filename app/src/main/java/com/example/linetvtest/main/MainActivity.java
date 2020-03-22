@@ -16,6 +16,5 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainPresenter = new MainPresenter(Injection.provideDramasRepository(this), this);
-        mainPresenter.getTestData();
     }
 }

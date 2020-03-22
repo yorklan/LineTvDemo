@@ -18,6 +18,9 @@ public interface DramasDao {
     @Query("SELECT * FROM Dramas")
     List<Drama> getDramas();
 
+    @Query("SELECT * FROM Dramas WHERE name LIKE :keyword")
+    List<Drama> getSearchDramas(String keyword);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllDramas(List<Drama> dramas);
 }
