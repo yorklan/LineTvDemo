@@ -9,7 +9,10 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Final model class for a Drama.
@@ -80,11 +83,6 @@ public final class Drama {
         return totalViews;
     }
 
-    public String getCreatedAtString() {
-        // FIXME
-        return "";
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -96,5 +94,15 @@ public final class Drama {
 
     public double getRating() {
         return rating;
+    }
+
+    public String getCreatedAtString() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy / MM / dd", Locale.getDefault());
+        return simpleDateFormat.format(createdAt);
+    }
+
+    public String getRatingString() {
+        DecimalFormat df2 = new DecimalFormat("#.##");
+        return df2.format(rating);
     }
 }

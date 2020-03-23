@@ -1,7 +1,6 @@
 package com.example.linetvtest.data.source;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.example.linetvtest.data.Drama;
 

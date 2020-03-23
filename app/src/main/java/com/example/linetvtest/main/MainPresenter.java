@@ -29,6 +29,7 @@ public class MainPresenter implements MainContract.Presenter{
                 for (Drama d : dramas){
                     Log.e("drama"+d.getId(),d.getTotalViews()+",");
                 }
+                mMainView.showDramaCards(dramas);
             }
 
             @Override
