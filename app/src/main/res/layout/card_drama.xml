@@ -9,7 +9,7 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardElevation="0dp"
+    app:cardElevation="10dp"
     app:cardCornerRadius="@dimen/radius_medium">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,8 +53,8 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="@dimen/star_size"
-            android:layout_height="@dimen/star_size"
+            android:layout_width="@dimen/main_star_size"
+            android:layout_height="@dimen/main_star_size"
             android:layout_marginTop="@dimen/margin_small"
             android:contentDescription="@null"
             app:layout_constraintStart_toStartOf="@+id/text_card_create_at"

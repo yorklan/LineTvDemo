@@ -58,8 +58,8 @@ public class DramaCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 .transition(withCrossFade())
                 .into(dramaCardViewHolder.imgThumb);
         dramaCardViewHolder.textName.setText(drama.getName());
-        dramaCardViewHolder.textCreateAt.setText(drama.getCreatedAtString());
-        dramaCardViewHolder.textRating.setText(drama.getRatingString());
+        dramaCardViewHolder.textCreateAt.setText(drama.getCreatedAtStringSimple());
+        dramaCardViewHolder.textRating.setText(drama.getRatingStringDF2());
         dramaCardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,6 +1,9 @@
 package com.example.linetvtest.data;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
@@ -13,13 +16,14 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Final model class for a Drama.
  */
 
 @Entity(tableName = "dramas")
-public final class Drama {
+public final class Drama implements Parcelable {
 
     @PrimaryKey
     @ColumnInfo(name = "dramaid")
@@ -70,6 +74,42 @@ public final class Drama {
         this.rating = rating;
     }
 
+    protected Drama(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        totalViews = in.readInt();
+        createdAt = new Date(in.readLong());
+        thumb = Objects.requireNonNull(in.readString());
+        rating = in.readDouble();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeInt(totalViews);
+        dest.writeLong(createdAt.getTime());
+        dest.writeString(thumb);
+        dest.writeDouble(rating);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Drama> CREATOR = new Creator<Drama>() {
+        @Override
+        public Drama createFromParcel(Parcel in) {
+            return new Drama(in);
+        }
+
+        @Override
+        public Drama[] newArray(int size) {
+            return new Drama[size];
+        }
+    };
+
     public int getId() {
         return id;
     }
@@ -96,13 +136,26 @@ public final class Drama {
         return rating;
     }
 
-    public String getCreatedAtString() {
+    public String getCreatedAtStringSimple() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy / MM / dd", Locale.getDefault());
         return simpleDateFormat.format(createdAt);
     }
 
-    public String getRatingString() {
+    public String getCreatedAtString() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
+        return simpleDateFormat.format(createdAt);
+    }
+
+    public String getTotalViewsString() {
+        return String.valueOf(totalViews);
+    }
+
+    public String getRatingStringDF2() {
         DecimalFormat df2 = new DecimalFormat("#.##");
         return df2.format(rating);
+    }
+
+    public String getRatingString() {
+        return Double.toString(rating);
     }
 }

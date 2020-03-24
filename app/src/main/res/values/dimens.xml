@@ -15,7 +15,7 @@
     <dimen name="text_11">11sp</dimen>
     <dimen name="text_10">10sp</dimen>
 
-    <dimen name="margin_big">32</dimen>
+    <dimen name="margin_big">32dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_smallest">4dp</dimen>
@@ -23,5 +23,9 @@
     <dimen name="radius_medium">15dp</dimen>
 
     <!-- Main -->
-    <dimen name="star_size">25dp</dimen>
+    <dimen name="main_star_size">25dp</dimen>
+
+    <!-- Detail -->
+    <dimen name="detail_star_size">30dp</dimen>
+
 </resources>

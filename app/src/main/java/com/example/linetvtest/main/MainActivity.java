@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.example.linetvtest.Injection;
 import com.example.linetvtest.R;
 import com.example.linetvtest.data.Drama;
+import com.example.linetvtest.detail.DetailActivity;
 
 import java.util.List;
 
@@ -60,15 +62,19 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void showDramaCards(List<Drama> dramaList) {
-
-        Log.e("startActivityDetail","1");
         mDramaCardAdapter.updateData(dramaList);
         mDramaCardAdapter.setOnItemClickListener(new DramaCardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull Drama drama) {
-
+                startActivityDetail(drama);
             }
         });
         mDramaCardAdapter.notifyDataSetChanged();
+    }
+
+    private void startActivityDetail(@NonNull Drama drama){
+        Intent intent  = new Intent(this, DetailActivity.class);
+        intent.putExtra("drama",drama);
+        startActivity(intent);
     }
 }

@@ -29,13 +29,15 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.5'
     annotationProcessor 'androidx.room:room-compiler:2.2.5'
 
-    // DramasRemoteDataSource
+    // Volley(DramasRemoteDataSource)
     implementation 'com.android.volley:volley:1.1.1'
-    // Glide
+    // Glide(Loading Thumb)
     implementation 'com.github.bumptech.glide:glide:4.9.0'
-    // Gson
+    // Gson(for API JSON)
     implementation 'com.google.code.gson:gson:2.8.5'
     // View
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.cardview:cardview:1.0.0"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
+    implementation 'com.google.android.material:material:1.1.0'
 }

@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">LinetvTest</string>
+    <string name="app_name">LineTVDemo</string>
+    <string name="detail_create_at">Create At</string>
+    <string name="detail_total_views">Total Views</string>
 </resources>
