@@ -91,7 +91,6 @@ public class GsonRequest<T> extends Request<T> {
             String json = new String(
                     response.data,
                     StandardCharsets.UTF_8);
-            Log.e("volley_string", json);
             return Response.success(
                     gson.fromJson(json, clazz),
                     HttpHeaderParser.parseCacheHeaders(response));

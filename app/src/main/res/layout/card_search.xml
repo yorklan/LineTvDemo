@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_medium"
+    android:gravity="start|center_vertical"
+    android:clickable="true"
+    android:focusable="true"
+    tools:ignore="UseCompoundDrawables">
+
+    <ImageView
+        android:layout_width="@dimen/main_star_search"
+        android:layout_height="@dimen/main_star_search"
+        android:contentDescription="@null"
+        app:srcCompat="@drawable/ic_star_search" />
+
+    <TextView
+        android:id="@+id/text_card_search_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:gravity="center"
+        android:textSize="@dimen/text_18"/>
+
+
+</LinearLayout>

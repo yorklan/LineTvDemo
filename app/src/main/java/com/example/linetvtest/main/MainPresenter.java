@@ -16,6 +16,8 @@ public class MainPresenter implements MainContract.Presenter{
 
     private final MainContract.View mMainView;
 
+    private boolean isSearchSuggestionUpdate = true;
+
     MainPresenter(@NonNull DramasRepository dramasRepository, @NonNull MainContract.View mainView){
         mDramasRepository = dramasRepository;
         mMainView = mainView;
@@ -26,9 +28,6 @@ public class MainPresenter implements MainContract.Presenter{
         mDramasRepository.getDramas(new DramasDataSource.LoadDramasCallback() {
             @Override
             public void onDramasLoaded(List<Drama> dramas) {
-                for (Drama d : dramas){
-                    Log.e("drama"+d.getId(),d.getTotalViews()+",");
-                }
                 mMainView.showDramaCards(dramas);
             }
 
@@ -40,19 +39,40 @@ public class MainPresenter implements MainContract.Presenter{
     }
 
     @Override
-    public void getSearchData(String keyword) {
+    public void onQueryTextSubmit(String query) {
+        getSearchData(query, false);
+    }
+
+    @Override
+    public void onQueryTextChange(String newText) {
+        if(isSearchSuggestionUpdate){
+            getSearchData(newText, !newText.isEmpty());
+        }else {
+            mMainView.showSearchSuggestions(null);
+        }
+        isSearchSuggestionUpdate = true;
+    }
+
+    private void getSearchData(String keyword, final boolean isSearchSuggestion) {
         mDramasRepository.getSearchDramas(keyword, new DramasDataSource.LoadDramasCallback() {
             @Override
             public void onDramasLoaded(List<Drama> dramas) {
-                for (Drama d : dramas){
-                    Log.e("drama*"+d.getId(),d.getTotalViews()+",");
+                if(isSearchSuggestion){
+                    mMainView.showSearchSuggestions(dramas);
+                }else {
+                    mMainView.showDramaCards(dramas);
                 }
             }
 
             @Override
             public void onDataNotAvailable() {
-                Log.e("drama*","error");
+                mMainView.showSearchSuggestions(null);
             }
         });
+    }
+
+    @Override
+    public void lockSearchSuggestionsUpdate() {
+        isSearchSuggestionUpdate = false;
     }
 }
