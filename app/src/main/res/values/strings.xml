@@ -2,4 +2,8 @@
     <string name="app_name">LineTVDemo</string>
     <string name="detail_create_at">Create At</string>
     <string name="detail_total_views">Total Views</string>
+    <string name="error_network">Network Error, Please check your network connection and retry later.</string>
+    <string name="error_server">Server Error, Please retry later.</string>
+    <string name="error_retry">Retry</string>
+    <string name="error_no_result">No Result</string>
 </resources>

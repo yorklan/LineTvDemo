@@ -16,6 +16,8 @@ public interface MainContract {
         void showSearchSuggestions(@Nullable List<Drama> dramaList);
 
         void showDramaCards(@Nullable List<Drama> dramaList);
+
+        void showDramaCardsError(int status);
     }
 
     interface Presenter {

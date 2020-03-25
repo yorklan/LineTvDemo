@@ -38,14 +38,13 @@ public class DramasRepository implements DramasDataSource {
             }
 
             @Override
-            public void onDataNotAvailable() {
-                // internet was not connected or server error
-                getDramasFromLocalDataSource(callback);
+            public void onDataNotAvailable(boolean isNetworkError) {
+                getDramasFromLocalDataSource(callback, isNetworkError);
             }
         });
     }
 
-    private void getDramasFromLocalDataSource(@NonNull final LoadDramasCallback callback){
+    private void getDramasFromLocalDataSource(@NonNull final LoadDramasCallback callback, final boolean isShowNetWorkError){
         mDramasLocalDataSource.getDramas(new LoadDramasCallback() {
             @Override
             public void onDramasLoaded(List<Drama> dramas) {
@@ -53,8 +52,8 @@ public class DramasRepository implements DramasDataSource {
             }
 
             @Override
-            public void onDataNotAvailable() {
-                callback.onDataNotAvailable();
+            public void onDataNotAvailable(boolean isNetworkError) {
+                callback.onDataNotAvailable(isShowNetWorkError);
             }
         });
     }

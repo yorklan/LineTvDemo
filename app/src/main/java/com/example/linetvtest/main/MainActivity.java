@@ -13,13 +13,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.linetvtest.Injection;
@@ -76,6 +72,19 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         mDramaCardAdapter = new DramaCardAdapter();
+        mDramaCardAdapter.setOnItemClickListener(new DramaCardAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull Drama drama) {
+                startActivityDetail(drama);
+            }
+
+            @Override
+            public void onBtnRetryClick() {
+                mDramaCardAdapter.setStatus(DramaCardAdapter.VIEW_TYPE_LOADING);
+                mDramaCardAdapter.notifyDataSetChanged();
+                mMainPresenter.getTestData();
+            }
+        });
         recyclerView.setAdapter(mDramaCardAdapter);
     }
 
@@ -110,12 +119,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void showDramaCards(List<Drama> dramaList) {
         mDramaCardAdapter.updateData(dramaList);
-        mDramaCardAdapter.setOnItemClickListener(new DramaCardAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull Drama drama) {
-                startActivityDetail(drama);
-            }
-        });
+        mDramaCardAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showDramaCardsError(int status) {
+        mDramaCardAdapter.setStatus(status);
         mDramaCardAdapter.notifyDataSetChanged();
     }
 

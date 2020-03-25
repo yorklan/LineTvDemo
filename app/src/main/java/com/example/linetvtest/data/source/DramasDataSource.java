@@ -12,7 +12,7 @@ public interface DramasDataSource {
 
         void onDramasLoaded(List<Drama> dramas);
 
-        void onDataNotAvailable();
+        void onDataNotAvailable(boolean isNetworkError);
     }
 
     void getDramas(@NonNull LoadDramasCallback callback);

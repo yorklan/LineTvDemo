@@ -3,8 +3,8 @@ package com.example.linetvtest.data.source.remote;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -49,23 +49,24 @@ public class DramasRemoteDataSource implements DramasDataSource {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.onDataNotAvailable();
+                        // check if internet was not connected
+                        callback.onDataNotAvailable( error instanceof NetworkError );
                     }
                 });
         mRequestQueue.add(gsonRequest);
     }
 
-    // not use : reserved space for data synchronization
+    // reserved for data synchronization
     @Override
     public void saveDramas(List<Drama> dramas) {
     }
 
-    // not use : reserved space for server api
+    // reserved for server api
     @Override
     public void getSearchDramas(String keyword, @NonNull LoadDramasCallback callback) {
     }
 
-    // not use : reserved space for server data analysis
+    // reserved for server data analysis
     @Override
     public void saveSearchQuery(String keyword) {
     }

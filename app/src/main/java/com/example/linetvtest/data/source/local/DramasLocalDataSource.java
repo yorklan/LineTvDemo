@@ -53,7 +53,7 @@ public class DramasLocalDataSource implements DramasDataSource {
                     @Override
                     public void run() {
                         if (dramas.isEmpty()) {
-                            callback.onDataNotAvailable();
+                            callback.onDataNotAvailable(false);
                         } else {
                             callback.onDramasLoaded(dramas);
                         }
@@ -88,7 +88,7 @@ public class DramasLocalDataSource implements DramasDataSource {
                         if (dramas!=null && !dramas.isEmpty()) {
                             callback.onDramasLoaded(dramas);
                         } else {
-                            callback.onDataNotAvailable();
+                            callback.onDataNotAvailable(false);
                         }
                     }
                 });

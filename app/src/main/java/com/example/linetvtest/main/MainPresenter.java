@@ -8,6 +8,7 @@ import com.example.linetvtest.data.Drama;
 import com.example.linetvtest.data.source.DramasDataSource;
 import com.example.linetvtest.data.source.DramasRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainPresenter implements MainContract.Presenter{
@@ -27,7 +28,7 @@ public class MainPresenter implements MainContract.Presenter{
     @Override
     public void setSearchViewStatus() {
         if(!mDramasRepository.getSearchLastQuery().isEmpty()){
-            mMainView.showSearchViewString("");
+            mMainView.showSearchViewString(mDramasRepository.getSearchLastQuery());
         }
     }
 
@@ -40,7 +41,6 @@ public class MainPresenter implements MainContract.Presenter{
                 if(lastQuery.isEmpty()){
                     mMainView.showDramaCards(dramas);
                 }else {
-                    lockSearchSuggestionsUpdate();
                     mMainView.showSearchViewString(lastQuery);
                     isSearchQuerySubmit = true;
                     getSearchData(mDramasRepository.getSearchLastQuery(), false);
@@ -48,8 +48,8 @@ public class MainPresenter implements MainContract.Presenter{
             }
 
             @Override
-            public void onDataNotAvailable() {
-                Log.e("drama","error");
+            public void onDataNotAvailable(boolean isNetworkError) {
+                mMainView.showDramaCardsError(isNetworkError ? DramaCardAdapter.VIEW_TYPE_ERROR_NETWORK : DramaCardAdapter.VIEW_TYPE_ERROR_SERVER);
             }
         });
     }
@@ -88,7 +88,11 @@ public class MainPresenter implements MainContract.Presenter{
             }
 
             @Override
-            public void onDataNotAvailable() {
+            public void onDataNotAvailable(boolean isNetworkError) {
+                if(!isSearchSuggestion){
+                    mMainView.showDramaCards(new ArrayList<Drama>());
+                    mMainView.showDramaCardsError(DramaCardAdapter.VIEW_TYPE_ERROR_NO_RESULT);
+                }
                 mMainView.showSearchSuggestions(null);
             }
         });
