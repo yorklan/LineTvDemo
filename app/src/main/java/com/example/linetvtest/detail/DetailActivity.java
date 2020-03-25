@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.linetvtest.R;
 import com.example.linetvtest.data.Drama;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -22,6 +23,8 @@ public class DetailActivity extends AppCompatActivity {
 
         Drama drama = getIntent().getParcelableExtra("drama");
         if(drama!=null){
+            CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar_detail);
+            collapsingToolbarLayout.setTitle(drama.getName());
             ImageView imgThumb = findViewById(R.id.img_detail_thumb);
             Glide.with(this)
                     .load(drama.getThumb())

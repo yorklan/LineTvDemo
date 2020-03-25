@@ -1,7 +1,5 @@
 package com.example.linetvtest.data.source.remote;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 

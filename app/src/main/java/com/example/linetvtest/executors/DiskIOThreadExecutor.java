@@ -9,7 +9,7 @@ public class DiskIOThreadExecutor implements Executor {
 
     private final Executor mDiskIO;
 
-    public DiskIOThreadExecutor() {
+    DiskIOThreadExecutor() {
         mDiskIO = Executors.newSingleThreadExecutor();
     }
 

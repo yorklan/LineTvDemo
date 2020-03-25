@@ -1,6 +1,7 @@
 package com.example.linetvtest.main;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.cursoradapter.widget.CursorAdapter;
@@ -13,10 +14,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.linetvtest.Injection;
 import com.example.linetvtest.R;
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private DramaCardAdapter mDramaCardAdapter;
     private SearchSuggestionCursorAdapter mSearchSuggestionCursorAdapter;
     private SearchView mSearchView;
+
+    private boolean isLeave = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 return false;
             }
         });
+        mSearchView.setSubmitButtonEnabled(true);
 
         SearchView.SearchAutoComplete mSearchAutoComplete = mSearchView.findViewById(R.id.search_src_text);
         mSearchAutoComplete.setThreshold(1);
@@ -128,10 +134,36 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mDramaCardAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isLeave = false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mSearchView.clearFocus();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isLeave){
+            isLeave = false;
+            super.onBackPressed();
+        }else {
+            isLeave = true;
+            Toast toast = Toast.makeText(this, getString(R.string.hint_leave), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, getResources().getDimensionPixelOffset(R.dimen.toast_height));
+            toast.show();
+        }
+
+    }
+
     private void startActivityDetail(@NonNull Drama drama){
         Intent intent  = new Intent(this, DetailActivity.class);
         intent.putExtra("drama",drama);
-        startActivity(intent);
+        startActivityForResult(intent,0);
     }
 
     public class SearchSuggestionCursorAdapter extends CursorAdapter {

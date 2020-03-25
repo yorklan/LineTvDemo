@@ -9,13 +9,11 @@ import java.util.concurrent.Executor;
 
 public class GlobalExecutors {
 
-    private static final int THREAD_COUNT = 3;
-
     private final Executor diskIO;
 
     private final Executor mainThread;
 
-    GlobalExecutors(Executor diskIO, Executor mainThread) {
+    private GlobalExecutors(Executor diskIO, Executor mainThread) {
         this.diskIO = diskIO;
         this.mainThread = mainThread;
     }
