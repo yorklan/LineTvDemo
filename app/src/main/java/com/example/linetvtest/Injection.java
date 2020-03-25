@@ -16,6 +16,6 @@ public class Injection {
         LinetvTestDatabase database = LinetvTestDatabase.getInstance(context);
         return DramasRepository.getInstance(
                 DramasRemoteDataSource.getInstance(context),
-                DramasLocalDataSource.getInstance(new GlobalExecutors(), database.dramasDao()));
+                DramasLocalDataSource.getInstance(new GlobalExecutors(), database.dramasDao(), context.getSharedPreferences("LineTv.Search", Context.MODE_PRIVATE)));
     }
 }

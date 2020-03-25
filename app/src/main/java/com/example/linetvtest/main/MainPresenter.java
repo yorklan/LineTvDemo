@@ -17,6 +17,7 @@ public class MainPresenter implements MainContract.Presenter{
     private final MainContract.View mMainView;
 
     private boolean isSearchSuggestionUpdate = true;
+    private boolean isSearchQuerySubmit = false;
 
     MainPresenter(@NonNull DramasRepository dramasRepository, @NonNull MainContract.View mainView){
         mDramasRepository = dramasRepository;
@@ -24,11 +25,26 @@ public class MainPresenter implements MainContract.Presenter{
     }
 
     @Override
+    public void setSearchViewStatus() {
+        if(!mDramasRepository.getSearchLastQuery().isEmpty()){
+            mMainView.showSearchViewString("");
+        }
+    }
+
+    @Override
     public void getTestData() {
         mDramasRepository.getDramas(new DramasDataSource.LoadDramasCallback() {
             @Override
             public void onDramasLoaded(List<Drama> dramas) {
-                mMainView.showDramaCards(dramas);
+                String lastQuery = mDramasRepository.getSearchLastQuery();
+                if(lastQuery.isEmpty()){
+                    mMainView.showDramaCards(dramas);
+                }else {
+                    lockSearchSuggestionsUpdate();
+                    mMainView.showSearchViewString(lastQuery);
+                    isSearchQuerySubmit = true;
+                    getSearchData(mDramasRepository.getSearchLastQuery(), false);
+                }
             }
 
             @Override
@@ -41,6 +57,8 @@ public class MainPresenter implements MainContract.Presenter{
     @Override
     public void onQueryTextSubmit(String query) {
         getSearchData(query, false);
+        mDramasRepository.saveSearchQuery(query);
+        isSearchQuerySubmit = true;
     }
 
     @Override
@@ -49,8 +67,13 @@ public class MainPresenter implements MainContract.Presenter{
             getSearchData(newText, !newText.isEmpty());
         }else {
             mMainView.showSearchSuggestions(null);
+            isSearchSuggestionUpdate = true;
         }
-        isSearchSuggestionUpdate = true;
+
+        if(isSearchQuerySubmit){
+            mDramasRepository.saveSearchQuery("");
+            isSearchQuerySubmit = false;
+        }
     }
 
     private void getSearchData(String keyword, final boolean isSearchSuggestion) {

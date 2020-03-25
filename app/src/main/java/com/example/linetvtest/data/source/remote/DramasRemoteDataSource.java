@@ -37,10 +37,6 @@ public class DramasRemoteDataSource implements DramasDataSource {
         return mRequestQueue;
     }
 
-    public void getTestData(@Nullable Response.Listener<TestData> onSuccessListener, @Nullable Response.ErrorListener onErrorListener){
-
-    }
-
     @Override
     public void getDramas(@NonNull final LoadDramasCallback callback) {
         String url = "https://static.linetv.tw/interview/dramas-sample.json";
@@ -59,14 +55,24 @@ public class DramasRemoteDataSource implements DramasDataSource {
         mRequestQueue.add(gsonRequest);
     }
 
-    // not use
+    // not use : reserved space for data synchronization
     @Override
     public void saveDramas(List<Drama> dramas) {
     }
 
-    // not use
+    // not use : reserved space for server api
     @Override
     public void getSearchDramas(String keyword, @NonNull LoadDramasCallback callback) {
+    }
 
+    // not use : reserved space for server data analysis
+    @Override
+    public void saveSearchQuery(String keyword) {
+    }
+
+    // not use
+    @Override
+    public String getSearchLastQuery() {
+        return null;
     }
 }

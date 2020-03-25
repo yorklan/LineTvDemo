@@ -20,4 +20,8 @@ public interface DramasDataSource {
     void saveDramas(List<Drama> dramas);
 
     void getSearchDramas(String keyword, @NonNull LoadDramasCallback callback);
+
+    void saveSearchQuery(String keyword);
+
+    String getSearchLastQuery();
 }

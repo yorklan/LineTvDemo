@@ -68,4 +68,14 @@ public class DramasRepository implements DramasDataSource {
     public void getSearchDramas(String keyword, @NonNull LoadDramasCallback callback) {
         mDramasLocalDataSource.getSearchDramas("%"+keyword+"%", callback);
     }
+
+    @Override
+    public void saveSearchQuery(String keyword) {
+        mDramasLocalDataSource.saveSearchQuery(keyword);
+    }
+
+    @Override
+    public String getSearchLastQuery() {
+        return mDramasLocalDataSource.getSearchLastQuery();
+    }
 }

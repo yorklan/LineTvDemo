@@ -1,5 +1,7 @@
 package com.example.linetvtest.data.source.local;
 
+import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 
 import com.example.linetvtest.data.Drama;
@@ -16,18 +18,25 @@ public class DramasLocalDataSource implements DramasDataSource {
 
     private GlobalExecutors mGlobalExecutors;
 
+    private SharedPreferences mSharedPreferencesSearch;
+
+    private final String searchLastQuery = "searchLastQuery";
+
     private DramasLocalDataSource(@NonNull GlobalExecutors globalExecutors,
-                                 @NonNull DramasDao dramasDao) {
+                                  @NonNull DramasDao dramasDao,
+                                  @NonNull SharedPreferences sharedPreferencesSearch) {
         mGlobalExecutors = globalExecutors;
         mDramasDao = dramasDao;
+        mSharedPreferencesSearch = sharedPreferencesSearch;
     }
 
     public static DramasLocalDataSource getInstance(@NonNull GlobalExecutors globalExecutors,
-                                                   @NonNull DramasDao dramasDao) {
+                                                    @NonNull DramasDao dramasDao,
+                                                    @NonNull SharedPreferences sharedPreferencesSearch) {
         if (mInstance == null) {
             synchronized (DramasLocalDataSource.class) {
                 if (mInstance == null) {
-                    mInstance = new DramasLocalDataSource(globalExecutors, dramasDao);
+                    mInstance = new DramasLocalDataSource(globalExecutors, dramasDao, sharedPreferencesSearch);
                 }
             }
         }
@@ -64,7 +73,6 @@ public class DramasLocalDataSource implements DramasDataSource {
                 mDramasDao.insertAllDramas(dramas);
             }
         };
-
         mGlobalExecutors.diskIO().execute(saveRunnable);
     }
 
@@ -88,5 +96,17 @@ public class DramasLocalDataSource implements DramasDataSource {
         };
 
         mGlobalExecutors.diskIO().execute(runnable);
+    }
+
+    @Override
+    public void saveSearchQuery(String keyword) {
+        mSharedPreferencesSearch.edit()
+                .putString(searchLastQuery, keyword)
+                .apply();
+    }
+
+    @Override
+    public String getSearchLastQuery() {
+        return mSharedPreferencesSearch.getString(searchLastQuery, "");
     }
 }

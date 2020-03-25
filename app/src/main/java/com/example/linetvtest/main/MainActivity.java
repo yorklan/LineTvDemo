@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mMainPresenter = new MainPresenter(Injection.provideDramasRepository(this), this);
         buildSearchView();
         buildRecyclerView();
+        mMainPresenter.setSearchViewStatus();
         mMainPresenter.getTestData();
     }
 
@@ -76,6 +77,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         recyclerView.setLayoutManager(linearLayoutManager);
         mDramaCardAdapter = new DramaCardAdapter();
         recyclerView.setAdapter(mDramaCardAdapter);
+    }
+
+    @Override
+    public void showSearchViewString(@NonNull String string) {
+        mSearchView.setIconified(false);
+        mSearchView.setQuery(string, false);
+        mSearchView.clearFocus();
     }
 
     @Override
